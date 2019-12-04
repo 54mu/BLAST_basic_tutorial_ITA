@@ -23,10 +23,25 @@ oppure, se si è installato mamba
 `mamba install -c bioconda blast`  
 
 ## Uso
-### Termini
-Da qui in poi userò sempre gli stessi termini per definire i vari elementi usati nei comandi:  
-+ **query**:
-+ **database**:
-+ **sorgente**:
+D'ora in poi si prosegue in una interfaccia testuale, vale a dire **prompt dei comandi** in windows oppure **terminale** in linux o mac. Il procedimento è uguale per tutti i sistemi operativi.
 ### Creazione del database
-È necessario convertire la lista di sequenze su cui fare la ricerca in un 
+È necessario convertire la lista di sequenze su cui fare la ricerca in un database di blast. Per farlo il comando più semplice è  
+```
+makeblastdb -in inputfile.fasta -dbtype moleculetype -parse_seqids -out database_name
+```
++ **inputfile.fasta** - è il file con le sequenze di riferimento (trascrittoma, proteoma, genoma etc..)
++ **moleculetype** - il tipo di molecole del database: **nucl** per nucleotidi, **prot** per proteine
++ **database_name** - il nome che si vuole dare al database
+
+### Ricerca di sequenze in database
+ci sono 5 tipi di ricerca possibili:
++ blastn : allinea sequenze nucleotidiche su un database di sequenze nucleotidiche
++ blastp : allinea sequenze amminoacidiche su un database di sequenze amminoacidiche
++ blastx : allinea sequenze nucleotidiche su un database di sequenze amminoacidiche
++ tblastn : allinea sequenze amminoacidiche su un database di sequenze nucleotidiche tradotte
++ tblastx : allinea sequenze nucleotidiche tradotte su un database di sequenze nucleotidiche tradotte
+
+l'utilizzo base delle ricerche blast è uguale per tutti e 5 i metodi e si distingue soltanto in base al comando, in questo esempio userò blastx, ma ognuno dei 5 va bene.
+```
+blastx -db database_name -query query_name -evalue evalue_threshold -out output_name -outfmt format
+```
